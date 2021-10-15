@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:3000
+
+GET {{baseUrl}}/repositories
+
+###
+
+GET {{baseUrl}}/repositories/6d4cf38a-8aef-409e-8ca4-91a89da12460
+
+### 
+
+POST {{baseUrl}}/repositories
+Content-Type: application/json
+
+{
+  "url": "https://github.com/Rocketseat/umbriel",
+  "title": "Umbriel",
+  "techs": ["Node", "Express", "TypeScript"]
+}
+
