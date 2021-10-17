@@ -6,11 +6,25 @@ const { checksExistsRepository, validateId } = repositoryController;
 router.get("/", repositoryController.getAll);
 router.post("/", repositoryController.save);
 
-router.use(validateId);
-router.use(checksExistsRepository);
-router.get("/:id", repositoryController.findById);
-router.put("/:id", repositoryController.update);
-router.delete("/:id", repositoryController.destroy);
-router.post("/:id/like", repositoryController.like);
+router.get(
+  "/:id",
+  [checksExistsRepository, validateId],
+  repositoryController.findById
+);
+router.put(
+  "/:id",
+  [checksExistsRepository, validateId],
+  repositoryController.update
+);
+router.delete(
+  "/:id",
+  [checksExistsRepository, validateId],
+  repositoryController.destroy
+);
+router.post(
+  "/:id/like",
+  [checksExistsRepository, validateId],
+  repositoryController.like
+);
 
 module.exports = router;

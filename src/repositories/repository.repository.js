@@ -14,14 +14,19 @@ const save = (repository) => {
 };
 
 const update = (repositoryData, id) => {
-  let repository = findById(id);
-  repository = { ...repositoryData };
+  let repositoriesData = getAll();
+  repositories = repositoriesData.map((repository) => {
+    if (repository.id === id) {
+      return repositoryData;
+    }
+    return repository;
+  });
   return findById(id);
 };
 
 const destroy = (id) => {
   const repository = findById(id);
-  repositories.splice(repository, 1);
+  repositories = repositories.splice(repository, 1);
   if (!findById(id)) {
     return true;
   }
@@ -31,6 +36,7 @@ const destroy = (id) => {
 const like = (id) => {
   const repository = findById(id);
   repository.likes++;
+  return repository;
 };
 
 module.exports = {

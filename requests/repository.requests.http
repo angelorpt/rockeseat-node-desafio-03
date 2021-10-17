@@ -1,13 +1,10 @@
 @baseUrl = http://localhost:3000
-
 GET {{baseUrl}}/repositories
-
 ###
-
-GET {{baseUrl}}/repositories/6d4cf38a-8aef-409e-8ca4-91a89da12460
-
+GET {{baseUrl}}/repositories/b08bcf72-9a6c-49f1-ba66-e7d3735ee798
+###
+POST {{baseUrl}}/repositories/354ec804-2b69-4887-a7f0-c58f95f09b3b/like
 ### 
-
 POST {{baseUrl}}/repositories
 Content-Type: application/json
 
@@ -16,4 +13,14 @@ Content-Type: application/json
   "title": "Umbriel",
   "techs": ["Node", "Express", "TypeScript"]
 }
+### 
+PUT {{baseUrl}}/repositories/6b394d2c-d248-4931-8320-7fb880b56476
+Content-Type: application/json
 
+{
+  "url": "https://github.com/Rocketseat/novo",
+  "title": "Novo",
+  "techs": ["React", "ReactNative"]
+}
+###
+DELETE {{baseUrl}}/repositories/b08bcf72-9a6c-49f1-ba66-e7d3735ee798

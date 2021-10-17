@@ -1,9 +1,9 @@
-const repositoryRespository = require("../repositories/repository.repository");
+const repositoryRepository = require("../repositories/repository.repository");
 const { v4: uuidv4, validate } = require("uuid");
 
 const checksExistsRepository = (req, res, next) => {
   const { id } = req.params;
-  const repositories = repositoryRespository.getAll();
+  const repositories = repositoryRepository.getAll();
   let exists = repositories.some((repository) => repository.id === id);
   if (!exists) {
     return res.status(404).json({ error: "Repository not found" });
@@ -20,13 +20,13 @@ const validateId = (req, res, next) => {
 };
 
 const getAll = (_, res) => {
-  const repositories = repositoryRespository.getAll();
+  const repositories = repositoryRepository.getAll();
   return res.json(repositories);
 };
 
 const findById = (req, res) => {
-  const { id } = req;
-  return res.json(repositoryRespository.findById(id));
+  const { id } = req.params;
+  return res.json(repositoryRepository.findById(id));
 };
 
 const save = (req, res) => {
@@ -40,35 +40,39 @@ const save = (req, res) => {
     likes: 0,
   };
 
-  const repository = repositoryRespository.save(repositoryNew);
+  const repository = repositoryRepository.save(repositoryNew);
 
   return res.status(201).json(repository);
 };
 
 const update = (req, res) => {
   const { id } = req.params;
-  const updatedRepository = req.body;
+  const { title, url, techs } = req.body;
 
-  const repositoryNew = {
-    ...repositories[repositoryIndex],
-    ...updatedRepository,
+  const repository = repositoryRepository.findById(id);
+
+  const repositoryToUpdate = {
+    ...repository,
+    title,
+    url,
+    techs,
   };
 
-  repositories[repositoryIndex] = repository;
+  const repositoryUpdated = repositoryRepository.update(repositoryToUpdate, id);
 
-  return res.json(repository);
+  return res.json(repositoryUpdated);
 };
 
 const destroy = (req, res) => {
   const { id } = req.params;
-  repositoryRespository.destroy(id);
+  repositoryRepository.destroy(id);
   return res.status(204).send();
 };
 
 const like = (req, res) => {
   const { id } = req.params;
-  repositoryRespository.like(id);
-  return res.json("likes");
+  const respository = repositoryRepository.like(id);
+  return res.json({ likes: respository.likes });
 };
 
 module.exports = {
